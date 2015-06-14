@@ -13,6 +13,10 @@
 #include <stdio.h>
 #include <string.h>
 
+//nvdl
+#define portTICK_PERIOD_MS 1
+typedef int TickType_t;
+
 /* Priorities at which the tasks are created. */
 #define mainBLINK_TASK_PRIORITY				(tskIDLE_PRIORITY + 1)
 
@@ -55,7 +59,7 @@ int main()
 /*-----------------------------------------------------------*/
 static void prvBlinkTask(void *pvParameters)
 {
-	/* Set up the LED outputs */
+	// Set up the LED outputs
 	// Enable clock for GPIOA
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
 
@@ -67,20 +71,20 @@ static void prvBlinkTask(void *pvParameters)
 
 	GPIO_SetBits(GPIOA, mainLED_1 | mainLED_2 | mainLED_3);
 
-	/* The parameter in vTaskDelayUntil is the absolute time
-	 * in ticks at which you want to be woken calculated as
-	 * an increment from the time you were last woken. */
+	// The parameter in vTaskDelayUntil is the absolute time
+	// in ticks at which you want to be woken calculated as
+	// an increment from the time you were last woken.
 	TickType_t xNextWakeTime;
-	/* Initialize xNextWakeTime - this only needs to be done once. */
+	// Initialize xNextWakeTime - this only needs to be done once.
 	xNextWakeTime = xTaskGetTickCount();
 
 	while (1)
 	{
-		/* LED on for 25 ms */
+		// LED on for 25 ms
 		GPIO_ResetBits(GPIOA, mainLED_1);
 		vTaskDelayUntil(&xNextWakeTime, 25 / portTICK_PERIOD_MS);
 
-		/* LED off for 1000 ms */
+		// LED off for 1000 ms
 		GPIO_SetBits(GPIOA, mainLED_1);
 		vTaskDelayUntil(&xNextWakeTime, 1000 / portTICK_PERIOD_MS);
 	}
