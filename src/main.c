@@ -15,7 +15,7 @@
 
 //nvdl
 #define portTICK_PERIOD_MS 1
-typedef int TickType_t;
+typedef double TickType_t;
 
 /* Priorities at which the tasks are created. */
 #define mainBLINK_TASK_PRIORITY				(tskIDLE_PRIORITY + 1)
